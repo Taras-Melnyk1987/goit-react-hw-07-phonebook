@@ -3,15 +3,15 @@ import IconButton from '../IconButton';
 import { FilterWrapper, Input } from './Filter.styled';
 import { FaTimes } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFilterValue } from '../../redux/storeSelectors';
-import { addFilterValue, resetFilter } from '../../redux/contactsSlice';
+import * as selectors from 'redux/contactsSelectors';
+import { changeFilterValue, resetFilterValue } from 'redux/filterSlice';
 
 const Filter = () => {
   const dispatch = useDispatch();
-  const value = useSelector(getFilterValue);
+  const filterValue = useSelector(selectors.getFilterValue);
 
   const handleFilterChange = e => {
-    dispatch(addFilterValue(e.target.value));
+    dispatch(changeFilterValue(e.target.value));
   };
 
   return (
@@ -21,15 +21,15 @@ const Filter = () => {
         <Input
           type="text"
           name="filter"
-          value={value}
+          value={filterValue}
           onChange={handleFilterChange}
         />
-        {value && (
+        {filterValue && (
           <IconButton
             color="blue"
             type="button"
             aria-label="Clear filter"
-            onClick={() => dispatch(resetFilter())}
+            onClick={() => dispatch(resetFilterValue())}
           >
             <FaTimes />
           </IconButton>
